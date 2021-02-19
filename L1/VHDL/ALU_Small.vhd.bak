@@ -1,0 +1,102 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity ALU_Small is
+    Port ( A 	: in  STD_LOGIC_VECTOR (6 DOWNTO 0);
+           B 	: in  STD_LOGIC_VECTOR (6 DOWNTO 0);
+		   Sub 	: in STD_LOGIC;
+           V,Z 	: out  STD_LOGIC;
+           Sum 	: out  STD_LOGIC_VECTOR (6 DOWNTO 0));
+end ALU_Small;
+
+architecture rtl of ALU_Small is
+
+component Full_Adder is
+	port (  A : in STD_LOGIC;
+			B : in STD_LOGIC;
+			C_in : in STD_LOGIC;
+			C_out : out STD_LOGIC;
+			Sum : out STD_LOGIC);
+end component Full_Adder;
+
+signal sum_int, carry : STD_LOGIC_VECTOR(6 DOWNTO 0);
+signal B_add_or_sub : STD_LOGIC_VECTOR(6 DOWNTO 0);
+
+begin
+
+Bit0: component Full_Adder
+	port map (A => A(0),
+				B => B_add_or_sub(0),
+				C_in => Sub,
+				Sum => sum_int(0),
+				C_out => carry(0)
+	);
+	
+Bit1: component Full_Adder
+	port map (A => A(1),
+				B => B_add_or_sub(1),
+				C_in => carry(0),
+				Sum => sum_int(1),
+				C_out => carry(1)
+	);
+
+Bit2: component Full_Adder
+	port map (A => A(2),
+				B => B_add_or_sub(2),
+				C_in => carry(1),
+				Sum => sum_int(2),
+				C_out => carry(2)
+	);
+
+Bit3: component Full_Adder
+	port map (A => A(3),
+				B => B_add_or_sub(3),
+				C_in => carry(2),
+				Sum => sum_int(3),
+				C_out => carry(3)
+	);
+
+Bit4: component Full_Adder
+	port map (A => A(4),
+				B => B_add_or_sub(4),
+				C_in => carry(3),
+				Sum => sum_int(4),
+				C_out => carry(4)
+	);
+
+Bit5: component Full_Adder
+	port map (A => A(5),
+				B => B_add_or_sub(5),
+				C_in => carry(4),
+				Sum => sum_int(5),
+				C_out => carry(5)
+	);
+	
+Bit6: component Full_Adder
+	port map (A => A(6),
+				B => B_add_or_sub(6),
+				C_in => carry(5),
+				Sum => sum_int(6),
+				C_out => carry(6)
+	);
+
+--Overflow Flag
+V <= (carry(7) XOR carry(0)) or ((carry(7) XOR carry(0));
+
+--Zero Flag
+Z <= not(sum_int(0) or sum_int(1) or sum_int(2) or sum_int(3) or sum_int(4) or sum_int(5) or sum_int(6));
+
+--Sum
+Sum <= sum_int;
+
+--Subtraction (B 2's Comp.)
+B_add_or_sub(0) <= (B(0) AND (NOT Sub)) OR ((NOT B(0)) AND Sub);
+B_add_or_sub(1) <= (B(1) AND (NOT Sub)) OR ((NOT B(1)) AND Sub);
+B_add_or_sub(2) <= (B(2) AND (NOT Sub)) OR ((NOT B(2)) AND Sub);
+B_add_or_sub(3) <= (B(3) AND (NOT Sub)) OR ((NOT B(3)) AND Sub);
+B_add_or_sub(4) <= (B(4) AND (NOT Sub)) OR ((NOT B(4)) AND Sub);
+B_add_or_sub(5) <= (B(5) AND (NOT Sub)) OR ((NOT B(5)) AND Sub);
+B_add_or_sub(6) <= (B(6) AND (NOT Sub)) OR ((NOT B(6)) AND Sub);
+
+end rtl;
