@@ -82,7 +82,7 @@ Bit6: component Full_Adder
 	);
 
 --Overflow Flag
-V <= (carry(7) XOR carry(0)) or ((carry(7) XOR carry(0));
+V <= (carry(7) XOR carry(0)) or (carry(7) XOR carry(0));
 
 --Zero Flag
 Z <= not(sum_int(0) or sum_int(1) or sum_int(2) or sum_int(3) or sum_int(4) or sum_int(5) or sum_int(6));
