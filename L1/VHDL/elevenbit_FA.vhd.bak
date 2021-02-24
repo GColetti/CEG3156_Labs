@@ -103,11 +103,11 @@ BEGIN
 	
 	FA_10: Full_Adder
 	PORT MAP(
-		in_A => in_A(10), 
-		in_B => in_B(10), 		
-		in_C => int_C(9),
-		o_Result => int_S(10),
-	 	o_CarryOut =>int_C(10));
+		A => in_A(10), 
+		B => in_B(10), 		
+		C_in => int_C(9),
+		Sum => int_S(10),
+	 	C_out =>int_C(10));
 
 	--Output driver
 	o_Sum 	<= int_S;

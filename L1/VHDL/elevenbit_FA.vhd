@@ -33,7 +33,7 @@ BEGIN
 	PORT MAP(
 		A => in_A(1), 
 		B => in_B(1), 		
-		C_in => int_C(1),
+		C_in => int_C(0),
 		Sum => int_S(1),
 	 	C_out =>int_C(1));
 
