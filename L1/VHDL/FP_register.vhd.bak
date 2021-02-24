@@ -56,7 +56,8 @@ FP_exponent: sevenBitRegister PORT MAP (
 		i_clock	=> i_clk,
 		i_Value	=> i_Value(14 downto 8),			
 		o_Value => int_exp);
-FP_mantissa: eightBitRegister PORT MAP (
+
+FP_exponent: eightBitRegister PORT MAP (
 		i_resetBar => i_reset,
 		i_load	=> i_ld,
 		i_clock	=> i_clk,
