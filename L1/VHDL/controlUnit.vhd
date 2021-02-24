@@ -48,7 +48,7 @@ architecture rtl of controlUnit is
 			o_q, o_qBar	: OUT	STD_LOGIC);
 	END COMPONENT;
 
-	COMPONENT elevenbitFA IS
+	COMPONENT elevenbit_FA IS
 		PORT (in_A, in_B 		 	: IN STD_LOGIC_VECTOR(10 downto 0);
 			Cin	 	 	 			: IN STD_LOGIC;
 			o_Sum			 		: OUT STD_LOGIC_VECTOR(10 downto 0);
@@ -116,12 +116,12 @@ BEGIN
 		o_Value => int_CNT_out
 
 
-	Add: elevenbitFA
+	Add: elevenbit_FA
 	PORT MAP (in_A => int_N,
 		in_B => "00000000000",
 		Cin	=> in_shLR_out(10),
-		o_Sum => int_shLR		 	
-	END elevenbitFA;
+		o_Sum => int_shLR);		 	
+	
 
 	DFF_s0 : enARdFF_2b -- Reset => 1
 	PORT MAP(

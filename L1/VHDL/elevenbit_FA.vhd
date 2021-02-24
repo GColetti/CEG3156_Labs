@@ -1,14 +1,14 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 
-ENTITY elevenbitFA IS
+ENTITY elevenbit_FA IS
 	PORT (in_A, in_B 		 	: IN STD_LOGIC_VECTOR(10 downto 0);
 		Cin	 	 	 			: IN STD_LOGIC;
 		o_Sum			 		: OUT STD_LOGIC_VECTOR(10 downto 0);
 		o_C_Out, o_V			: OUT STD_LOGIC);
-END elevenbitFA;
+END elevenbit_FA;
 
-ARCHITECTURE struct OF elevenbitFA IS
+ARCHITECTURE struct OF elevenbit_FA IS
 
 SIGNAL int_S, int_C : STD_LOGIC_VECTOR(10 downto 0);
 
