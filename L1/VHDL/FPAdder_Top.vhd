@@ -4,15 +4,13 @@ USE ieee.std_logic_1164.ALL;
 ENTITY FPAdder_Top IS
 	PORT (
 		mantissaA, mantissaB, exponentA, exponentB	: IN STD_LOGIC_VECTOR (3 downto 0);
-		signA, signB, GClk, GResetbar		 : IN STD_LOGIC; 
+		signA, signB, GClock, GReset		 : IN STD_LOGIC; 
 		Result		 : OUT STD_LOGIC_VECTOR (15 downto 0);
-		Overflow, exception		 : OUT STD_LOGIC );
+		Overflow	: OUT STD_LOGIC );
 		
 END;
 
 ARCHITECTURE rtl OF FPAdder_Top IS
-
-
 
 COMPONENT FP_Top IS
 	PORT (
@@ -24,8 +22,8 @@ COMPONENT FP_Top IS
 END COMPONENT;
 
 BEGIN
-	-- Component Instantiation --
-	TopL: Float_Point_Top
+	
+	Top: Float_Point_Top
 	PORT MAP (in_FP_A(15) => signA,
 		  in_FP_A(14 downto 11) => exponentA,
 		  in_FP_A(10 downto 8) => "000",
@@ -39,8 +37,6 @@ BEGIN
 		  in_g_clk => GClk,
 		  in_g_resetbar => GResetbar,
 		  o_Result => Result,
-		  o_Overflow => Overflow,
-		  o_exception => exception
-	);
+		  o_Overflow => Overflow);
 
 END rtl;

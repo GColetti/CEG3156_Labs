@@ -12,7 +12,6 @@ ENTITY controlUnit IS
 		o_WRexpDiff, o_WRALU_B,	o_FP_C 		  			: OUT STD_LOGIC; 
 		o_Mux_A,o_Mux_B,o_Mux_Exp  						: OUT STD_LOGIC; 
 		o_ShR,o_IncDec_En, o_shLR 				: OUT STD_LOGIC;
-		o_SR_en,o_SR_Sel, o_sLR_En					: OUT STD_LOGIC;
 		o_IncDec_Sel,  o_sLR_Sel 		   				: OUT STD_LOGIC_VECTOR(1 downto 0);
 		o_State											: OUT STD_LOGIC_VECTOR(10 downto 0); 
 		o_Con											: OUT STD_LOGIC_VECTOR(3 downto 0));
