@@ -253,8 +253,6 @@ BEGIN
 	o_Mux_A	 	 <= int_State(2);
 	o_Mux_B	 	 <= int_State(1) OR int_State(4);  
 	o_Mux_Exp	 <= int_State(5) AND in_Exp_F ;
-	o_SR_En		 <= int_State(1) OR int_State(2) OR int_State(3) OR int_State(4);
-   o_SR_Sel	 <= int_State(1) OR int_State(2) OR int_State(4);
 	o_IncDec_En	 <= int_State(4) OR int_State(5) OR int_State(7) OR int_State(8);   
    	o_sLR_En	 <= int_State(5) OR int_State(6) OR int_State(7) OR int_State(8); 
 	o_IncDec_Sel(0) <= int_State(4) OR int_State(5) OR int_State(8);
