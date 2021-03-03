@@ -1,0 +1,145 @@
+library IEEE;
+use IEEE.Std_Logic_1164.all;
+
+entity mainALU is 
+	port( aluOp: in std_logic_vector(1 downto 0);
+			inReadData1, inReadData2: in std_logic_vector(31 downto 0);
+			en: in std_logic;
+			zero: out std_logic;
+			aluOut: out std_logic_vector(31 downto 0));
+			end mainALU;
+	architecture mainALU_arch of mainALU is 
+	component aluMUX port(
+			in1, in2, in3, in4: in std_logic_vector(31 downto 0);
+			control: in std_logic_vector(1 downto 0);
+			muxOUT: out std_logic_vector(31 downto 0)
+		);
+	end component; 
+	component rippleAdder32bit port(
+			x,y : in std_logic_vector(31 downto 0);
+			Cin : in std_logic;
+			Sum: out std_logic_vector(31 downto 0);
+			Carry: out std_logic
+		);
+	end component;
+	component mux2x1 port( v1, v2 : in std_logic;
+			sel : in std_logic;
+			output: out std_logic_vector
+		);
+	end component;
+	signal addResult, subResult, compareResult, orResult, complementReadData2Temp, complementReadData2, big_en, aluResult : std_logic_vector(31 downto 0);
+	signal ignoredCarry, zero_out: std_logic;
+	begin
+	L1: rippleAdder32bit port map(inReadData1, inReadData2, '0', addresult, ignoredCarry);
+	complementReadData2(0)<=not(inReadData2(0));
+	complementReadData2(1)<=not(inReadData2(1));
+	complementReadData2(2)<=not(inReadData2(2));
+	complementReadData2(3)<=not(inReadData2(3));
+	complementReadData2(4)<=not(inReadData2(4));
+	complementReadData2(5)<=not(inReadData2(5));
+	complementReadData2(6)<=not(inReadData2(6));
+	complementReadData2(7)<=not(inReadData2(7));
+	complementReadData2(8)<=not(inReadData2(8));
+	complementReadData2(9)<=not(inReadData2(9));
+	complementReadData2(10)<=not(inReadData2(10));
+	complementReadData2(11)<=not(inReadData2(11));
+	complementReadData2(12)<=not(inReadData2(12));
+	complementReadData2(13)<=not(inReadData2(13));
+	complementReadData2(14)<=not(inReadData2(14));
+	complementReadData2(15)<=not(inReadData2(15));
+	complementReadData2(16)<=not(inReadData2(16));
+	complementReadData2(17)<=not(inReadData2(17));
+	complementReadData2(18)<=not(inReadData2(18));
+	complementReadData2(19)<=not(inReadData2(19));
+	complementReadData2(20)<=not(inReadData2(20));
+	complementReadData2(21)<=not(inReadData2(21));
+	complementReadData2(22)<=not(inReadData2(22));
+	complementReadData2(23)<=not(inReadData2(23));
+	complementReadData2(24)<=not(inReadData2(24));
+	complementReadData2(25)<=not(inReadData2(25));
+	complementReadData2(26)<=not(inReadData2(26));
+	complementReadData2(27)<=not(inReadData2(27));
+	complementReadData2(28)<=not(inReadData2(28));
+	complementReadData2(29)<=not(inReadData2(29));
+	complementReadData2(30)<=not(inReadData2(30));
+	complementReadData2(31)<=not(inReadData2(31));
+	L2: rippleAdder32bit port map ("00000000000000000000000000000001", complementReadData2, '0', complementReadData2Temp, ignoredCarry);
+	L3: rippleAdder32bit port map (inreadData1, complementReadData2Temp, '0', subResult, ignoredCarry);
+	orResult(0)<=inreadData1(0) or inreadData2(0);
+	orResult(1)<=inreadData1(1) or inreadData2(1);
+	orResult(2)<=inreadData1(2) or inreadData2(2);
+	orResult(3)<=inreadData1(3) or inreadData2(3);
+	orResult(4)<=inreadData1(4) or inreadData2(4);
+	orResult(5)<=inreadData1(5) or inreadData2(5);
+	orResult(6)<=inreadData1(6) or inreadData2(6);
+	orResult(7)<=inreadData1(7) or inreadData2(7);
+	orResult(8)<=inreadData1(8) or inreadData2(8);
+	orResult(9)<=inreadData1(9) or inreadData2(9);
+	orResult(10)<=inreadData1(10) or inreadData2(10);
+	orResult(11)<=inreadData1(11) or inreadData2(11);
+	orResult(12)<=inreadData1(12) or inreadData2(12);
+	orResult(13)<=inreadData1(13) or inreadData2(13);
+	orResult(14)<=inreadData1(14) or inreadData2(14);
+	orResult(15)<=inreadData1(15) or inreadData2(15);
+	orResult(16)<=inreadData1(16) or inreadData2(16);
+	orResult(17)<=inreadData1(17) or inreadData2(17);
+	orResult(18)<=inreadData1(18) or inreadData2(18);
+	orResult(19)<=inreadData1(19) or inreadData2(19);
+	orResult(20)<=inreadData1(20) or inreadData2(20);
+	orResult(21)<=inreadData1(21) or inreadData2(21);
+	orResult(22)<=inreadData1(22) or inreadData2(22);
+	orResult(23)<=inreadData1(23) or inreadData2(23);
+	orResult(24)<=inreadData1(24) or inreadData2(24);
+	orResult(25)<=inreadData1(25) or inreadData2(25);
+	orResult(26)<=inreadData1(26) or inreadData2(26);
+	orResult(27)<=inreadData1(27) or inreadData2(27);
+	orResult(28)<=inreadData1(28) or inreadData2(28);
+	orResult(29)<=inreadData1(29) or inreadData2(29);
+	orResult(30)<=inreadData1(30) or inreadData2(30);
+	orResult(31)<=inreadData1(31) or inreadData2(31);
+	compareResult(0) <= subResult(31);
+	compareResult(31 downto 1) <= "0000000000000000000000000000000";
+	big_en(0)<= en AND '1';
+	big_en(1)<= en AND '1';
+	big_en(2)<= en AND '1';
+	big_en(3)<= en AND '1';
+	big_en(4)<= en AND '1';
+	big_en(5)<= en AND '1';
+	big_en(6)<= en AND '1';
+	big_en(7)<= en AND '1';
+	big_en(8)<= en AND '1';
+	big_en(9)<= en AND '1';
+	big_en(10)<= en AND '1';
+	big_en(11)<= en AND '1';
+	big_en(12)<= en AND '1';
+	big_en(13)<= en AND '1';
+	big_en(14)<= en AND '1';
+	big_en(15)<= en AND '1';
+	big_en(16)<= en AND '1';
+	big_en(17)<= en AND '1';
+	big_en(18)<= en AND '1';
+	big_en(19)<= en AND '1';
+	big_en(20)<= en AND '1';
+	big_en(21)<= en AND '1';
+	big_en(22)<= en AND '1';
+	big_en(23)<= en AND '1';
+	big_en(24)<= en AND '1';
+	big_en(25)<= en AND '1';
+	big_en(26)<= en AND '1';
+	big_en(27)<= en AND '1';
+	big_en(28)<= en AND '1';
+	big_en(29)<= en AND '1';
+	big_en(30)<= en AND '1';
+	big_en(31)<= en AND '1';
+
+	addResult<=addResult AND big_en;
+	subResult<=addResult AND big_en;
+	orResult<=addResult AND big_en;
+	compareResult<=addResult AND big_en;
+	L4: aluMUX port map (addResult, subResult, compareResult, orResult, aluOp, aluResult);
+	zero<= not(aluResult(31) or aluResult(30) or aluResult(29) or aluResult(28) or aluResult(27) or  aluResult(26) or aluResult(25) or aluResult(24) or 
+	aluResult(23) or aluResult(22) or aluResult(21) or aluResult(20) or aluResult(19) or aluResult(18) or aluResult(17) or aluResult(16) or aluResult(15) or 
+	aluResult(14) or aluResult(13) or aluResult(12) or aluResult(11) or aluResult(10) or aluResult(9) or aluResult(8) or aluResult(7) or aluResult(6) or
+	aluResult(5) or aluResult(4) or aluResult(3) or aluResult(2) or aluResult(1) or aluResult(0));
+	aluOut<=aluResult;
+	end mainALU_arch;	
