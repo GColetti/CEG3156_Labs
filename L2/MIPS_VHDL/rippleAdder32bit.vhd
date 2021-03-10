@@ -45,11 +45,10 @@ begin
 	FA24: fullAdder1bit PORT MAP (t(23), x(23), y(23), Sum(23), t(24));
 	FA25: fullAdder1bit PORT MAP (t(24), x(24), y(24), Sum(24), t(25));
 	FA26: fullAdder1bit PORT MAP (t(25), x(25), y(25), Sum(25), t(26));
-	FA27: fullAdder1bit PORT MAP (t(26), x(26), y(26), Sum(26), t(26));
-	FA28: fullAdder1bit PORT MAP (t(26), x(26), y(26), Sum(26), t(27));
-	FA29: fullAdder1bit PORT MAP (t(27), x(27), y(27), Sum(27), t(28));
-	FA30: fullAdder1bit PORT MAP (t(28), x(28), y(28), Sum(28), t(29));
-	FA31: fullAdder1bit PORT MAP (t(29), x(29), y(29), Sum(29), t(30));
-	FA32: fullAdder1bit PORT MAP (t(30), x(30), y(30), Sum(30), t(31));
-	FA33: fullAdder1bit PORT MAP (t(31), x(31), y(31), Sum(31), Carry);
+	FA27: fullAdder1bit PORT MAP (t(26), x(26), y(26), Sum(26), t(27));
+	FA28: fullAdder1bit PORT MAP (t(26), x(26), y(26), Sum(27), t(28));
+	FA29: fullAdder1bit PORT MAP (t(27), x(27), y(27), Sum(28), t(29));
+	FA30: fullAdder1bit PORT MAP (t(28), x(28), y(28), Sum(29), t(30));
+	FA31: fullAdder1bit PORT MAP (t(29), x(29), y(29), Sum(30), t(31));
+	FA32: fullAdder1bit PORT MAP (t(30), x(30), y(30), Sum(31), Carry);
 end rtl;
