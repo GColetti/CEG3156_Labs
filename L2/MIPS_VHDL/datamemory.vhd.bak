@@ -276,6 +276,7 @@ architecture rtl of Datamemory is
 		X"00000000", 
 		X"00000000"), -- mem 256
 		
+
 	begin
 
 		mem_process: process(address, write_data,clk)
