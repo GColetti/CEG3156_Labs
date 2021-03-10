@@ -92,7 +92,7 @@ architecture rtl of singleCycleProc is
 	
 	COMPONENT Mux_2to1_32b
 	PORT(
-		ctrl : IN std_logic;
+		sel : IN std_logic;
 		A : IN std_logic_vector(31 downto 0);
 		B : IN std_logic_vector(31 downto 0);          
 		o_y : OUT std_logic_vector(31 downto 0)
@@ -194,7 +194,7 @@ architecture rtl of singleCycleProc is
 		ALU_branch: rippleAdder32bit PORT MAP(
 			x => pc_out,
 			y => x"00000004",
-			o_y => pc_out_next
+			Sum => pc_out_next
 		);
 		
 		
@@ -234,7 +234,7 @@ architecture rtl of singleCycleProc is
 		);
 		
 		Inst_Mux_extSign_o_red2: Mux_2to1_32b PORT MAP(
-			ctrl => alusrc,
+			sel => alusrc,
 			A => rd2,
 			B => extsig_out,
 			o_y => srcb
@@ -258,7 +258,7 @@ architecture rtl of singleCycleProc is
 		pcsrc <= branch and zero;
 		
 		Inst2_Mux_2to1_32b: Mux_2to1_32b PORT MAP(
-			ctrl => pcsrc,
+			sel => pcsrc,
 			A => pc_out_next,
 			B => pc_branch,
 			o_y => pc_in
@@ -266,7 +266,7 @@ architecture rtl of singleCycleProc is
 		
 
 		Inst3_Mux_2to1_32b: Mux_2to1_32b PORT MAP(
-			ctrl => memtoreg,
+			sel => memtoreg,
 			A => alu_result,
 			B => readdata,
 			o_y => result_mem
@@ -278,7 +278,7 @@ architecture rtl of singleCycleProc is
 		addr32_pc_next <= pc_out_next (31 downto 28) & addr &"00";
 		
 		Mux_instru_j: Mux_2to1_32b PORT MAP(
-			ctrl => jump,
+			sel => jump,
 			A => pc_in,
 			B => addr32_pc_next,
 			o_y => pc_next_j

@@ -3,7 +3,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity zero_extend is
     Port ( 
-	inic 	: in STD_LOGIC;
+	inic 		: in STD_LOGIC;
         extend 	: out  STD_LOGIC_VECTOR (31 downto 0)
 		);
 end zero_extend;

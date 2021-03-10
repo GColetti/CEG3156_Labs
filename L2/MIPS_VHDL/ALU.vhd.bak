@@ -78,7 +78,7 @@ architecture rtl of ALU is
 		
 		Inst_zero_extend: zero_extend PORT MAP(
 			inic => rslt_sum_res(31),
-			extend => rslt_slt
+			o_extend => rslt_slt
 		);
 		
 		mux_rslt_alu: mux_4_32b PORT MAP(

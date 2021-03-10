@@ -1,7 +1,6 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
-entity Mux_2to1_5bits is
     Port ( 
 	sel : in  STD_LOGIC;
         a : in  STD_LOGIC_VECTOR (4 downto 0);
