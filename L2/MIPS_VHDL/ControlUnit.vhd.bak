@@ -17,7 +17,7 @@ entity ControlUnit is
 end ControlUnit;
 
 architecture rtl of ControlUnit is
-	COMPONENT InstructionDecoder
+	COMPONENT MainDecoder
 	PORT(
 		opcode : IN std_logic_vector(5 downto 0);          
 		RegWrite : OUT std_logic;

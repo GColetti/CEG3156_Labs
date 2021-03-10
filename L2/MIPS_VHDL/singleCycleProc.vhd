@@ -1,16 +1,14 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
-entity MIPS is
-    Port (
-		clk : in  STD_LOGIC;
+entity singleCycleProc is
+    Port (	clk : in  STD_LOGIC;
 		reset : in std_logic;
 		address : out  STD_LOGIC_VECTOR (31 downto 0)
-		
          );
-end MIPS;
+end singleCycleProc;
 
-architecture rtl of MIPS is
+architecture rtl of singleCycleProc is
 
 	COMPONENT PC
 	PORT(
@@ -107,13 +105,15 @@ architecture rtl of MIPS is
 		dout : OUT std_logic_vector(31 downto 0)
 		);
 	END COMPONENT;
+
 	
-	COMPONENT ALU_sum
+	COMPONENT rippleAdder32bit
 	PORT(
-		a : IN std_logic_vector(31 downto 0);
-		b : IN std_logic_vector(31 downto 0);          
-		o_y : OUT std_logic_vector(31 downto 0)
-		);
+		x,y: in std_logic_vector(31 downto 0);
+		Cin : in std_logic;
+		Sum: out std_logic_vector(31 downto 0);
+		Carry: out std_logic
+	);
 	END COMPONENT;
 	
 	
@@ -191,10 +191,11 @@ architecture rtl of MIPS is
 		);
 		
 		
-		ALU_sum_4: ALU_sum PORT MAP(
-			a => pc_out,
-			b => x"00000004",
-			o_y => pc_out_next
+		ALU_branch: rippleAdder32bit PORT MAP(
+			x => pc_out,
+			y => x"00000004",
+			Cin => '0',
+			Sum => pc_out_next
 		);
 		
 		
@@ -249,7 +250,10 @@ architecture rtl of MIPS is
 		ALU_sum_shift: rippleAdder32bit PORT MAP(
 			x => shift_out,
 			y => pc_out_next,
-			Sum => pc_branch
+			Cin => '0',
+			Sum => pc_branch,
+			Carry => open
+
 		);
 		
 		pcsrc <= branch and zero;
