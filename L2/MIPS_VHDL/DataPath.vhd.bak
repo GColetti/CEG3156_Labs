@@ -6,7 +6,6 @@ entity MIPS is
 		clk : in  STD_LOGIC;
 		reset : in std_logic;
 		address : out  STD_LOGIC_VECTOR (31 downto 0)
-		
          );
 end MIPS;
 
