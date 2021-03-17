@@ -14,30 +14,31 @@ architecture rtl of Instruction_Memory is
 	type mem is array(0 to 67) of std_logic_vector(7 downto 0);
 	constant code : mem:=(
 		
-		-- Registers loaded.
+		-- Registers load
 		x"20",x"04",x"00",x"04",
 		x"20",x"05",x"00",x"05",
 		x"20",x"06",x"00",x"06",
 		x"20",x"07",x"00",x"07",
 		
 		-- Instructions
-		x"8C",x"41",x"00",x"01",	-- lw   
-		x"00",x"A4",x"18",x"22",	-- sub
-		x"00",x"E6",x"10",x"24",	-- and
-		x"00",x"85",x"20",x"25",	-- or
-		x"00",x"C7",x"28",x"20",	-- add
-		x"14",x"21",x"FF",x"FA",	-- bne
-		x"10",x"22",x"FF",x"FF",	-- beq
-		--x"00",x"62",x"30",x"2A",	
-		
-		x"10",x"21",x"00",x"02",
-		x"00",x"00",x"00",x"00",	-- nop
-		x"00",x"00",x"00",x"00",	-- nop
-		x"AC",x"01",x"00",x"02",	-- sw
-		x"00",x"23",x"20",x"20",
-		x"08",x"00",x"00",x"04" 	-- jump PC = 00
+		x"8C",x"02",x"00",x"00",	-- lw $2, 0;    
+		x"8C",x"03",x"03",x"01",	-- lw $3, 1; 
 
-		--others=> x"00"
+		x"00",x"14",x"48",x"22",	-- sub $1, $2, $3; 
+		x"01",x"2B",x"60",x"25",	-- or $4, $1, $3;
+		x"AC",x"04",x"00",x"03",	-- sw $4, 3;
+
+		x"14",x"B4",x"48",x"20",	-- add $1, $2, $3; 014B4820
+		x"AC",x"01",x"00",x"04",	-- sw $1, 4;
+		
+		x"8C",x"02",x"00",x"03",	-- lw $2, 3;
+		x"8C",x"03",x"00",x"04",	-- lw $3, 4;
+		x"08",x"00",x"00",x"11" 	-- j 11 (jump to PC = 44)
+		
+		x"11",x"29",x"00",x"D4", 	-- beq $1, $1, -44;
+		x"11",x"2A",x"00",x"F8", 	-- beq $1, $2, -8; 
+		
+		others=> x"00"
 	);
 
 	begin

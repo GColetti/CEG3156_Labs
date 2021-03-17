@@ -2,10 +2,16 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity singleCycleProc is
-    Port (	clk : in  STD_LOGIC;
-		reset : in std_logic;
-		address : out  STD_LOGIC_VECTOR (31 downto 0)
-         );
+    Port (GClock 		: in  STD_LOGIC;
+		GReset 			: in std_logic;
+		ValueSelect 	: in STD_LOGIC_VECTOR(2 downto 0);
+		MuxOut 			: out STD_LOGIC_VECTOR(7 downto 0);
+    	IntructionOut 	: out STD_LOGIC_VECTOR(31 downto 0);
+    	BranchOut		: out std_logic;
+    	ZeroOut			: out std_logic;
+    	MemWriteOut		: out std_logic;
+    	RegWriteOut		: out std_logic
+	);
 end singleCycleProc;
 
 architecture rtl of singleCycleProc is
@@ -18,8 +24,6 @@ architecture rtl of singleCycleProc is
 		dout : OUT std_logic_vector(31 downto 0)
 		);
 	END COMPONENT;
-	
-	
 	
 	COMPONENT Instruction_Memory
 	PORT(
@@ -125,6 +129,16 @@ architecture rtl of singleCycleProc is
 		o_y : OUT std_logic_vector(4 downto 0)
 		);
 	END COMPONENT;
+
+	COMPONENT SelectMUX is
+    Port (ValueSelect : in std_logic_vector(2 downto 0);
+        A : in  STD_LOGIC_VECTOR (7 downto 0);
+        B : in  STD_LOGIC_VECTOR (7 downto 0);
+        C : in  STD_LOGIC_VECTOR (7 downto 0);
+        D : in  STD_LOGIC_VECTOR (7 downto 0);
+        E : in  STD_LOGIC_VECTOR (7 downto 0);
+        MuxOut : out std_logic_vector(7 downto 0));
+	end COMPONENT;
 	
 	signal memtoreg,branch,alusrc,regdst,regwrite,jump,zero,memwrite : std_logic;
 	signal aluctrl : std_logic_vector(2 downto 0);
@@ -147,8 +161,6 @@ architecture rtl of singleCycleProc is
 	
 	signal srca,srcb,rd2,alu_result,extsig_out,readdata : std_logic_vector(31 downto 0);
 	signal shift_out,pc_branch,result_mem : std_logic_vector(31 downto 0);
-	
-	--signs for j
 
 	signal addr32,addr32_corri,addr32_pc_next,pc_next_j : std_logic_vector(31 downto 0);
 	signal pcsrc : std_logic;
@@ -170,7 +182,7 @@ architecture rtl of singleCycleProc is
 		
 
 		Inst_PC: PC PORT MAP(
-			clk => clk,
+			clk => GClock,
 			reset => reset,
 			din => pc_next_j,
 			dout => pc_out
@@ -182,11 +194,11 @@ architecture rtl of singleCycleProc is
 		);
 		
 		Memory: Datamemory PORT MAP(
-		address => alu_result,
-		write_data => rd2 ,
-		MemWrite => memwrite,
-		clk => clk,
-		read_data => readdata
+			address => alu_result,
+			write_data => rd2 ,
+			MemWrite => memwrite,
+			clk => GClock,
+			read_data => readdata
 		
 		);
 		
@@ -199,7 +211,6 @@ architecture rtl of singleCycleProc is
 		);
 		
 		
-		
 		Inst_Mux_rt_o_rd: Mux_2to1_5bits PORT MAP(
 			sel => regdst,
 			a => rt,
@@ -208,9 +219,8 @@ architecture rtl of singleCycleProc is
 		);
 		
 		
-		
 		Inst_Register_File: Register_File PORT MAP(
-			clk => clk,
+			clk => GClock,
 			we3 => regwrite,
 			A1 => rs,
 			A2 => rt,
@@ -274,15 +284,26 @@ architecture rtl of singleCycleProc is
 		);
 
 		
-		address <= alu_result;
+		IntructionOut <= alu_result;
 		
-		addr32_pc_next <= pc_out_next (31 downto 28) & addr &"00";
+		addr32_pc_next <= pc_out_next (31 downto 28) & addr & "00";
 		
 		Mux_instru_j: Mux_2to1_32b PORT MAP(
 			sel => jump,
 			A => pc_in,
 			B => addr32_pc_next,
 			o_y => pc_next_j
+		);
+
+		SelectMUX: SelectMUX PORT MAP (
+			i_ValueSelect => ValueSelect
+	        A => pc_out(7 downto 0),
+	        B => alu_result,
+	        C => srca,
+	        D => rd2,
+	        E => result_mem,
+	        F => '0' & regdst & jump & memread & memtoreg & aluctrl & alusrc,
+	        o_MuxOut => MuxOut
 		);
 		
 end rtl;

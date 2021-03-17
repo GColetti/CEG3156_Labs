@@ -19,8 +19,8 @@ architecture rtl of Datamemory is
 	type mem_array is array(0 to 31) of STD_LOGIC_VECTOR (31 downto 0);
 
 	signal data_mem: mem_array := (
-		X"00000000", -- mem 0
-		X"00000000", -- mem 1
+		X"00110111", -- mem 0 (55)
+		X"10101010", -- mem 1 (AA)
 		X"00000000",
 		X"00000000",
 		X"00000000",
