@@ -33,7 +33,7 @@ architecture rtl of Instruction_Memory is
 		
 		x"8C",x"02",x"00",x"03",	-- lw $2, 3;
 		x"8C",x"03",x"00",x"04",	-- lw $3, 4;
-		x"08",x"00",x"00",x"11" 	-- j 11 (jump to PC = 44)
+		x"08",x"00",x"00",x"11", 	-- j 11 (jump to PC = 44)
 		
 		x"11",x"29",x"00",x"D4", 	-- beq $1, $1, -44;
 		x"11",x"2A",x"00",x"F8", 	-- beq $1, $2, -8; 

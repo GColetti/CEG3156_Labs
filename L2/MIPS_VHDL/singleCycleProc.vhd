@@ -131,13 +131,15 @@ architecture rtl of singleCycleProc is
 	END COMPONENT;
 
 	COMPONENT SelectMUX is
-    Port (ValueSelect : in std_logic_vector(2 downto 0);
+   Port (
+		  i_ValueSelect : in std_logic_vector(2 downto 0);
         A : in  STD_LOGIC_VECTOR (7 downto 0);
         B : in  STD_LOGIC_VECTOR (7 downto 0);
         C : in  STD_LOGIC_VECTOR (7 downto 0);
         D : in  STD_LOGIC_VECTOR (7 downto 0);
         E : in  STD_LOGIC_VECTOR (7 downto 0);
-        MuxOut : out std_logic_vector(7 downto 0));
+		  F : in  STD_LOGIC_VECTOR (7 downto 0);
+        o_MuxOut : out std_logic_vector(7 downto 0));
 	end COMPONENT;
 	
 	signal memtoreg,branch,alusrc,regdst,regwrite,jump,zero,memwrite : std_logic;
@@ -165,6 +167,8 @@ architecture rtl of singleCycleProc is
 	signal addr32,addr32_corri,addr32_pc_next,pc_next_j : std_logic_vector(31 downto 0);
 	signal pcsrc : std_logic;
 	
+	signal int_MuxOut : std_LOGIC_VECTOR(7 downto 0);
+	
 	begin
 
 		Inst_ControlUnit: ControlUnit PORT MAP(
@@ -183,7 +187,7 @@ architecture rtl of singleCycleProc is
 
 		Inst_PC: PC PORT MAP(
 			clk => GClock,
-			reset => reset,
+			reset => GReset,
 			din => pc_next_j,
 			dout => pc_out
 		);
@@ -294,17 +298,20 @@ architecture rtl of singleCycleProc is
 			B => addr32_pc_next,
 			o_y => pc_next_j
 		);
+		
 
-		SelectMUX: SelectMUX PORT MAP (
-			i_ValueSelect => ValueSelect
+		SelectMUX1: SelectMUX PORT MAP (
+			  i_ValueSelect => ValueSelect,
 	        A => pc_out(7 downto 0),
-	        B => alu_result,
-	        C => srca,
-	        D => rd2,
-	        E => result_mem,
-	        F => '0' & regdst & jump & memread & memtoreg & aluctrl & alusrc,
-	        o_MuxOut => MuxOut
+	        B => alu_result(7 downto 0),
+	        C => srca(7 downto 0),
+	        D => rd2(7 downto 0),
+	        E => result_mem(7 downto 0),
+	        F => '0' & regdst & jump & memwrite & memtoreg & aluctrl(1 downto 0) & alusrc,
+	        o_MuxOut => int_MuxOut
 		);
+		
+		MuxOut <= int_MuxOut;
 		
 end rtl;
 

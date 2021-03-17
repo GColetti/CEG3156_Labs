@@ -12,8 +12,7 @@ end rippleAdder32bit;
 
 architecture rtl of rippleAdder32bit is
 component fullAdder1bit 
-	port(Cin, x, y: IN std_logic; 
-	Sum, Carry: OUT std_logic);
+	port(Cin, x, y: IN std_logic; Sum, Carry: OUT std_logic);
 end component;
 
 --temp carry signal

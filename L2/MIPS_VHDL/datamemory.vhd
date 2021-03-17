@@ -16,10 +16,10 @@ end Datamemory;
 
 architecture rtl of Datamemory is	  
 
-	type mem_array is array(0 to 31) of STD_LOGIC_VECTOR (31 downto 0);
+	type mem_array is array(0 to 255) of STD_LOGIC_VECTOR (31 downto 0);
 
 	signal data_mem: mem_array := (
-		X"00110111", -- mem 0 (55)
+		X"01010101", -- mem 0 (55)
 		X"10101010", -- mem 1 (AA)
 		X"00000000",
 		X"00000000",
@@ -50,7 +50,7 @@ architecture rtl of Datamemory is
 		X"00000000",
 		X"00000000", 
 		X"00000000", -- mem 30
-		X"00000000"),
+		X"00000000",
 		X"00000000", -- mem 32
 		X"00000000", 
 		X"00000000",
@@ -82,7 +82,7 @@ architecture rtl of Datamemory is
 		X"00000000",
 		X"00000000", 
 		X"00000000", 
-		X"00000000"), -- mem 64
+		X"00000000", -- mem 64
 		X"00000000", 
 		X"00000000",
 		X"00000000",
@@ -114,7 +114,7 @@ architecture rtl of Datamemory is
 		X"00000000",
 		X"00000000", 
 		X"00000000", 
-		X"00000000"),
+		X"00000000",
 		X"00000000", 
 		X"00000000", 
 		X"00000000",
@@ -274,7 +274,8 @@ architecture rtl of Datamemory is
 		X"00000000",
 		X"00000000", 
 		X"00000000", 
-		X"00000000"), -- mem 256
+		X"00000000"); -- mem 256
+		
 		
 	begin
 
