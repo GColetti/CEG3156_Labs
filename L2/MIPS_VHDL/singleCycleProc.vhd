@@ -114,7 +114,7 @@ architecture rtl of singleCycleProc is
 	COMPONENT rippleAdder32bit
 	PORT(
 		x,y: in std_logic_vector(31 downto 0);
-		Cin : in std_logic;
+		i_Cin : in std_logic;
 		Sum: out std_logic_vector(31 downto 0);
 		Carry: out std_logic
 	);
@@ -210,7 +210,7 @@ architecture rtl of singleCycleProc is
 		ALU_branch: rippleAdder32bit PORT MAP(
 			x => pc_out,
 			y => x"00000004",
-			Cin => '0',
+			i_Cin => '0',
 			Sum => pc_out_next
 		);
 		
@@ -264,7 +264,7 @@ architecture rtl of singleCycleProc is
 		ALU_sum_shift: rippleAdder32bit PORT MAP(
 			x => shift_out,
 			y => pc_out_next,
-			Cin => '0',
+			i_Cin => '0',
 			Sum => pc_branch,
 			Carry => open
 
