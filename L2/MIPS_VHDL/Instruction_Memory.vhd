@@ -11,16 +11,16 @@ entity Instruction_Memory is
 end Instruction_Memory;
 
 architecture rtl of Instruction_Memory is
-	type mem is array(0 to 67) of std_logic_vector(7 downto 0);
+	type mem is array(0 to 23) of std_logic_vector(7 downto 0);
 	constant code : mem:=(
 		
 		-- Place MIPS instruction here
-		x"8C", x"02", x"00", x"00";
-		x"8C", x"03", x"00", x"01";
-		x"00", x"43", x"08", x"20";
-		x"AC", x"01", x"00", x"03";
-		x"10", x"22", x"FF", x"FF";
-		x"10", x"22", x"FF", x"FF";
+		x"8C", x"02", x"00", x"00",
+		x"8C", x"03", x"00", x"01",
+		x"00", x"43", x"08", x"20",
+		x"AC", x"01", x"00", x"03",
+		x"10", x"22", x"FF", x"FF",
+		x"10", x"22", x"FF", x"FF"
 	
 
 		---- Instructions
@@ -37,7 +37,7 @@ architecture rtl of Instruction_Memory is
 		--x"10",x"21",x"00",x"D4", 	-- beq $1, $1, -44;
 		--x"10",x"22",x"00",x"F8", 	-- beq $1, $2, -8; 
 		
-		others=> x"00"
+		--others=> x"00"
 	);
 
 	begin
