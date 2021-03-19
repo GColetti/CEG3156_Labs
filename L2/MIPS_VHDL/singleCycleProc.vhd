@@ -145,7 +145,7 @@ architecture rtl of singleCycleProc is
 	signal memtoreg,branch,alusrc,regdst,regwrite,jump,zero,memwrite : std_logic;
 	signal aluctrl : std_logic_vector(2 downto 0);
 	
-	signal rst_pc : std_logic;
+	--signal rst_pc : std_logic;
 	signal pc_in,pc_out,instr: std_logic_vector(31 downto 0);
 	
 	alias code_op : std_logic_vector(5 downto 0) is instr(31 downto 26);
@@ -289,11 +289,9 @@ architecture rtl of singleCycleProc is
 			o_y => result_mem
 		);
 
-		
-		IntructionOut <= alu_result;
-		
 		addr32_pc_next <= pc_out_next (31 downto 28) & addr & "00";
-		
+		IntructionOut <= addr32_pc_next;
+
 		Mux_instru_j: Mux_2to1_32b PORT MAP(
 			sel => jump,
 			A => pc_in,
@@ -317,6 +315,10 @@ architecture rtl of singleCycleProc is
 		);
 		
 		MuxOut <= int_MuxOut;
+		BranchOut <= branch;
+    		ZeroOut	<= zero;	
+    		MemWriteOut <= memwrite;	
+    		RegWriteOut <= regwrite;
 		
 end rtl;
 
