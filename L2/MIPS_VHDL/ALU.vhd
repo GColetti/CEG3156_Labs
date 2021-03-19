@@ -52,8 +52,7 @@ architecture rtl of ALU is
 	END COMPONENT;
 	
 	
-	signal	rslt_and,rslt_or,rslt_and_compl,rslt_mux_alu,
-			rslt_or_compl,rslt_slt,bb,b_compl,rslt_sum_res : std_logic_vector (31 downto 0):=x"00000000";
+	signal	rslt_and,rslt_or,rslt_and_compl,rslt_mux_alu,rslt_or_compl,rslt_slt,bb,b_compl,rslt_sum_res : std_logic_vector (31 downto 0):=x"00000000";
 	
 	begin
 	
@@ -91,8 +90,7 @@ architecture rtl of ALU is
 		);
 		
 		
-		zero<=	'1' when (rslt_mux_alu = x"00000000") else 
-				'0';
+		zero<=	'1' when (rslt_mux_alu = x"00000000") else '0';
 		rslt<=rslt_mux_alu;
 	
 end rtl;

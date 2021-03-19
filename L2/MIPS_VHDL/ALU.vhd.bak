@@ -52,8 +52,7 @@ architecture rtl of ALU is
 	END COMPONENT;
 	
 	
-	signal	rslt_and,rslt_or,rslt_and_compl,rslt_mux_alu,
-			rslt_or_compl,rslt_slt,bb,b_compl,rslt_sum_res : std_logic_vector (31 downto 0):=x"00000000";
+	signal	rslt_and,rslt_or,rslt_and_compl,rslt_mux_alu,rslt_or_compl,rslt_slt,bb,b_compl,rslt_sum_res : std_logic_vector (31 downto 0):=x"00000000";
 	
 	begin
 	
@@ -78,7 +77,7 @@ architecture rtl of ALU is
 		
 		Inst_zero_extend: zero_extend PORT MAP(
 			inic => rslt_sum_res(31),
-			o_extend => rslt_slt
+			extend => rslt_slt
 		);
 		
 		mux_rslt_alu: mux_4_32b PORT MAP(
