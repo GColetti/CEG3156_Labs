@@ -235,6 +235,13 @@ architecture rtl of singleCycleProc is
 			RD2 => rd2,
 			WD3 => result_mem
 		);
+
+		Inst_Mux_extSign_o_red2: Mux_2to1_32b PORT MAP(
+			sel => alusrc,
+			A => rd2,
+			B => extsig_out,
+			o_y => srcb
+		);
 		
 		Inst_ALU: ALU PORT MAP(
 			a => srca,
@@ -250,12 +257,6 @@ architecture rtl of singleCycleProc is
 			dout => extsig_out
 		);
 		
-		Inst_Mux_extSign_o_red2: Mux_2to1_32b PORT MAP(
-			sel => alusrc,
-			A => rd2,
-			B => extsig_out,
-			o_y => srcb
-		);
 		
 		Inst_SL2: SL2 PORT MAP(
 			din => extsig_out,
