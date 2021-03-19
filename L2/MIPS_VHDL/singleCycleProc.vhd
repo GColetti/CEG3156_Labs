@@ -138,7 +138,7 @@ architecture rtl of singleCycleProc is
         C : in  STD_LOGIC_VECTOR (7 downto 0);
         D : in  STD_LOGIC_VECTOR (7 downto 0);
         E : in  STD_LOGIC_VECTOR (7 downto 0);
-		  F : in  STD_LOGIC_VECTOR (7 downto 0);
+	F : in  STD_LOGIC_VECTOR (7 downto 0);
         o_MuxOut : out std_logic_vector(7 downto 0));
 	end COMPONENT;
 	
@@ -166,6 +166,8 @@ architecture rtl of singleCycleProc is
 
 	signal addr32,addr32_corri,addr32_pc_next,pc_next_j : std_logic_vector(31 downto 0);
 	signal pcsrc : std_logic;
+
+	signal int_other : std_logic_vector(7 downto 0);
 	
 	signal int_MuxOut : std_LOGIC_VECTOR(7 downto 0);
 	
@@ -299,6 +301,9 @@ architecture rtl of singleCycleProc is
 			o_y => pc_next_j
 		);
 		
+		--Other control signals for MuxOut
+		int_other <= '0' & regdst & jump & memwrite & memtoreg & aluctrl(1 downto 0) & alusrc;
+		
 
 		SelectMUX1: SelectMUX PORT MAP (
 			  i_ValueSelect => ValueSelect,
@@ -307,7 +312,7 @@ architecture rtl of singleCycleProc is
 	        C => srca(7 downto 0),
 	        D => rd2(7 downto 0),
 	        E => result_mem(7 downto 0),
-	        F => '0' & regdst & jump & memwrite & memtoreg & aluctrl(1 downto 0) & alusrc,
+	        F => int_other,
 	        o_MuxOut => int_MuxOut
 		);
 		
