@@ -16,7 +16,7 @@ architecture rtl of Instruction_Memory is
 		
 		-- Place MIPS instruction here
 		x"8C", x"02", x"00", x"00",
-		x"8C", x"03", x"00", x"01",
+		x"8C", x"43", x"00", x"01",
 		x"00", x"43", x"08", x"20",
 		x"AC", x"01", x"00", x"03",
 		x"10", x"22", x"FF", x"FF",
