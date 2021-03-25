@@ -1,5 +1,6 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 entity singleCycleProc is
     Port (GClock 		: in  STD_LOGIC;
@@ -144,8 +145,7 @@ architecture rtl of singleCycleProc is
 	
 	signal memtoreg,branch,alusrc,regdst,regwrite,jump,zero,memwrite : std_logic;
 	signal aluctrl : std_logic_vector(2 downto 0);
-	
-	--signal rst_pc : std_logic;
+
 	signal pc_in,pc_out,instr: std_logic_vector(31 downto 0);
 	
 	alias code_op : std_logic_vector(5 downto 0) is instr(31 downto 26);

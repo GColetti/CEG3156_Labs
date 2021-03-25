@@ -24,8 +24,8 @@ architecture rtl of InstructionDecoder is
 	process(opcode)
 		begin
 			case opcode is
-				when "000000" => controls <= "110000010";
-				when "100011" => controls <= "101001000";
+				when "000000" => controls <= "110000010";--add
+				when "100011" => controls <= "101001000";--lw
 				when "101011" => controls <= "001010000";
 				when "000100" => controls <= "000100001";
 				when "001000" => controls <= "101000000";
