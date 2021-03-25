@@ -306,7 +306,7 @@ architecture rtl of singleCycleProc is
 
 		SelectMUX1: SelectMUX PORT MAP (
 			  i_ValueSelect => ValueSelect,
-	        A => pc_out(7 downto 0),
+	        A => instr(7 downto 0),
 	        B => alu_result(7 downto 0),
 	        C => srca(7 downto 0),
 	        D => rd2(7 downto 0),

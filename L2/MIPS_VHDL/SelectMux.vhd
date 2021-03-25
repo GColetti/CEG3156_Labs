@@ -21,7 +21,7 @@ begin
             B when (i_ValueSelect = "001") else
             C when (i_ValueSelect = "010") else
             D when (i_ValueSelect = "011") else
-            E when (i_ValueSelect = "011") else
+            E when (i_ValueSelect = "100") else
             F;
 end rtl;
 

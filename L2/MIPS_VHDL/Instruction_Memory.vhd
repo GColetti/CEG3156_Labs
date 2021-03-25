@@ -20,7 +20,7 @@ architecture rtl of Instruction_Memory is
 		x"00", x"43", x"08", x"20",
 		x"AC", x"01", x"00", x"03",
 		x"10", x"22", x"FF", x"FF",
-		x"10", x"22", x"FF", x"FF"
+		x"10", x"21", x"FF", x"FA"
 	
 
 		---- Instructions

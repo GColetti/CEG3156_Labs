@@ -90,8 +90,7 @@ architecture rtl of ALU is
 		);
 		
 		
-		zero<=	'1' when (rslt_mux_alu = x"00000000") else 
-				'0';
+		zero<=	'1' when (rslt_mux_alu = x"00000000") else '0';
 		rslt<=rslt_mux_alu;
 	
 end rtl;
