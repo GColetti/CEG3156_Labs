@@ -4,7 +4,6 @@ use ieee.std_logic_1164.all;
 -- Auxiliar register 3 - EX stage to MEM stage
 
 Entity EX_MEM is
-    Generic(W : integer);
     Port (clk           : in std_logic;
           S_RegWriteM   : in std_logic;
           S_MemtoRegM   : in std_logic;

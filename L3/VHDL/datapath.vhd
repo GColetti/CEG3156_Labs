@@ -70,9 +70,10 @@ architecture behaviour of datapath is
     for immsh : sl2 use entity work.sl2;
 
     component mux 
-        port(D0, D1 : in std_logic_vector(31 downto 0);
+	generic (W: integer);
+        port(D0, D1 : in std_logic_vector(W-1 downto 0);
              S      : in std_logic;
-             Y      : out std_logic_vector(31 downto 0));
+             Y      : out std_logic_vector(W-1 downto 0));
     end component;
     for muxregdest : mux use entity work.mux;
     for muxalusrc : mux use entity work.mux;
@@ -139,7 +140,7 @@ architecture behaviour of datapath is
           outWriteRegM     : out std_logic_vector(4 downto 0);
           outPcBranchM     : out std_logic_vector(31 downto 0));
     end component;
-    for regpipe3 : EX_MEM use entity work.EX_MEM;
+   
 
     component MEM_WB
     Port (clk           : in std_logic;
@@ -183,7 +184,7 @@ architecture behaviour of datapath is
         pcadder : adder port map( temp, X"00000004", pcplus4); -- soma 4 ao pc
         pcbrmux : mux generic map(32) port map(pcplus4, pcbranch, pcsrc, pcnextbr);
         pcmux : mux generic map(32) port map(pcnextbr, pcjump, jump, pcnext); -- mux do pc
-        regpipe1 : regaux1 generic map(32) port map(instruction, pcplus4, clk, instructionD, pcplus4D);
+        regpipe1 : IF_ID generic map(32) port map(instruction, pcplus4, clk, instructionD, pcplus4D);
 
         -- ID
 
@@ -192,26 +193,26 @@ architecture behaviour of datapath is
         signext0: signextension port map(instructionD(15 downto 0), sigimn); -- extende imediato
         immsh : sl2 port map(sigimn, signimsh); -- coloca "00" no final do imediato
         pcadder2 : adder port map(pcplus4, signimsh, pcbranch); -- soma extendido pcplus4
-        regpipe2 : regaux2 generic map(32) port map(clk, regwrite, memtoreg, memwrite, pcbranch, alucontrol, alusrc, regdst, srca, temp,
+        regpipe2 : ID_EX port map(clk, regwrite, memtoreg, memwrite, pcbranch, alucontrol, alusrc, regdst, srca, temp,
                                     instructionD(20 downto 16), instructionD(15 downto 11), sigimn, pcplus4D,
                                     regwriteE, memtoregE, memwrite, pcbranchE, alucontrolE, alusrcE, regdstE, srcaE, writedataE, 
                                     instructionD(20 downto 16), instructionE(15 downto 11), sigimnE, pcplus4E);
 
         -- EX
 
-        muxalusrc: mux port map(writedataE, sigimnE, alusrcE, srcb); -- qual entrada de scrb da alu
+        muxalusrc: mux generic map(32) port map(writedataE, sigimnE, alusrcE, srcb); -- qual entrada de scrb da alu
         muxregdest:mux generic map(5) port map(instructionE(20 downto 16), instructionE(15 downto 11), regdstE, writereg);
         alu0 : alu port map(srca, srcb, alucontrolE, aluout, zeroE); -- verificar se nao precisa de caryout e valores
         aluout <= temp;
-        regpipe3 : regaux3  port map(clk, regwriteE, memtoregE, memwrite, pcbranchE, zeroE, temp, writedatae, writereg, pcbranchE,
+        regpipe3 : EX_MEM port map(clk, regwriteE, memtoregE, memwrite, pcbranchE, zeroE, temp, writedatae, writereg, pcbranchE,
                                         regwriteM, memtoregM, memwrite, pcbranchM, zero, aluoutM, writedM, writeregM, pcbranchM);
 
         -- MEM
 
-        regpipe4 : regaux4 port map(clk, regwriteM, memtoregM, readdata, aluoutM, writeregM, regwriteW, memtoregW, readdataW, aluoutW, writeregW);
+        regpipe4 : MEM_WB port map(clk, regwriteM, memtoregM, readdata, aluoutM, writeregM, regwriteW, memtoregW, readdataW, aluoutW, writeregW);
         -- WB
 
-        muxaluout : mux port map(readdataW, aluoutW, memtoregW, result);
+        muxaluout : mux generic map(32) port map(readdataW, aluoutW, memtoregW, result);
 
 
 end behaviour;
