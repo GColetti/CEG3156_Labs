@@ -79,6 +79,7 @@ architecture behaviour of datapath is
     for muxaluout : mux use entity work.mux;
 
     component IF_ID
+    Generic(W : integer);
     Port (instruction : in std_logic_vector(W-1 downto 0);
           pcplus4     : in std_logic_vector(W-1 downto 0);
           clk         : in std_logic;
