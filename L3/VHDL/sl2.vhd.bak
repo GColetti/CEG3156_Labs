@@ -8,5 +8,5 @@ Entity sl2 is
 
 Architecture behave of sl2 is
 begin
-    Y <= A(28 downto 0) & "000";
+    Y <= A(29 downto 0) & "000";
     end;
