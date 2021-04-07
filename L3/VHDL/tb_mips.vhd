@@ -43,7 +43,17 @@ architecture behaviour of tb_mips is
         end process;
 
        process(clk)  begin
-           instr <= "00100000000100000000000000000001";
+          instr <= "10001100000000100000000000000000";
+          wait for 1 ns;
+          instr <= "10001100000000110000000000000001";
+          wait for 1 ns;
+          instr <= "00000000010000110000100000100000";
+          wait for 1 ns;
+          instr <= "10101100000000010000000000000011";
+          wait for 1 ns;
+          instr <= "00010000001000101111111111111111";
+          wait for 1 ns;
+          instr <= "00010000001000011111111111111010";
        end process;
 
        process -- termina a execucao 
