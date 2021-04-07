@@ -290,7 +290,7 @@ architecture rtl of singleCycleProc is
 			o_y => result_mem
 		);
 
-		addr32_pc_next <= pc_out_next (31 downto 28) & addr & "00";
+		addr32_pc_next <= pc_out_next(31 downto 28) & addr & "00";
 		IntructionOut <= addr32_pc_next;
 
 		Mux_instru_j: Mux_2to1_32b PORT MAP(
