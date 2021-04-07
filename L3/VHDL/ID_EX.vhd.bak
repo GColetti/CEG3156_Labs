@@ -21,16 +21,16 @@ Entity ID_EX is
           outS_RegWriteD   : out std_logic;
           outS_MemtoRegD   : out std_logic;
           outS_MemWriteD   : out std_logic;
-          outS_BranchD     : out std_logic_vector(31 downto 0);
+          outS_BranchD     : out std_logic_vector(W-1 downto 0);
           outS_ALUCOntrolD : out std_logic_vector(2 downto 0);
           outS_ALUSrcD     : out std_logic;
           outS_RegDstD     : out std_logic;
-          outRD1           : out std_logic_vector(31 downto 0);
-          outRD2           : out std_logic_vector(31 downto 0);
+          outRD1           : out std_logic_vector(W-1 downto 0);
+          outRD2           : out std_logic_vector(W-1 downto 0);
           outRtE           : out std_logic_vector(4 downto 0);
           outRdE           : out std_logic_vector(4 downto 0);
-          outSignExt       : out std_logic_vector(31 downto 0);
-          outPCPlus4       : out std_logic_vector(31 downto 0));
+          outSignExt       : out std_logic_vector(W-1 downto 0);
+          outPCPlus4       : out std_logic_vector(W-1 downto 0));
     End;
 
 Architecture behave of ID_EX is
