@@ -1,9 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
--- Auxiliar register 1 - IF stage to ID stage
-
-Entity regaux1 is
+Entity IF_ID is
     Generic(W : integer);
     Port (instruction : in std_logic_vector(W-1 downto 0);
           pcplus4     : in std_logic_vector(W-1 downto 0);
@@ -12,7 +10,7 @@ Entity regaux1 is
           pc_out      : out std_logic_vector(W-1 downto 0));
     End;
 
-Architecture behave of regaux1 is
+Architecture behave of IF_ID is
     begin
         process(clk)
         begin

@@ -3,7 +3,7 @@ use ieee.std_logic_1164.all;
 
 -- Auxiliar register 2 - ID stage to EX stage
 
-Entity regaux2 is
+Entity ID_EX is
     Generic(W : integer);
     Port (clk           : in std_logic;
           S_RegWriteD   : in std_logic;
@@ -34,7 +34,7 @@ Entity regaux2 is
           outPCPlus4       : out std_logic_vector(W-1 downto 0));
     End;
 
-Architecture behave of regaux2 is
+Architecture behave of ID_EX is
     begin
         process(clk)
         begin
