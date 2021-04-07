@@ -2,7 +2,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
-entity singleCycleProc is
+entity pipelinedProc is
     Port (GClock 		: in  STD_LOGIC;
 		GReset 			: in std_logic;
 		ValueSelect 	: in STD_LOGIC_VECTOR(2 downto 0);
@@ -13,9 +13,9 @@ entity singleCycleProc is
     	MemWriteOut		: out std_logic;
     	RegWriteOut		: out std_logic
 	);
-end singleCycleProc;
+end pipelinedProc;
 
-architecture rtl of singleCycleProc is
+architecture rtl of pipelinedProc is
 
 	COMPONENT PC
 	PORT(
